@@ -7,7 +7,7 @@ use yii\helpers\Url;
 use humhub\models\Setting;
 use humhub\components\behaviors\AccessControl;
 use humhub\modules\admin\components\Controller;
-use humhub\modules\gifs\models\forms\SettingsForm;
+use humhub\modules\gifs\models\forms\ConfigureForm;
 
 class AdminController extends Controller
 {
@@ -24,11 +24,11 @@ class AdminController extends Controller
 
     public function actionIndex()
     {
-        $form = new SettingsForm();
+        $form = new ConfigureForm();
         if ($form->load(Yii::$app->request->post())) {
             if ($form->validate()) {
                 Setting::Set('client', $form->client, 'gifs');
-               
+
                 Yii::$app->session->setFlash('data-saved', Yii::t('GifsModule.base', 'Saved'));
             }
         } else {

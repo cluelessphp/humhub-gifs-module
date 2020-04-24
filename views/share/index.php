@@ -1,10 +1,9 @@
 <?php
 
-//use Yii;
-use yii\bootstrap\ActiveForm;
 use yii\helpers\Url;
 use humhub\models\Setting;
-
+use yii\bootstrap\ActiveForm;
+use humhub\widgets\LoaderWidget;
 ?>
 <style>
 #gif-output img{
@@ -66,7 +65,7 @@ function grab_data() {
 		let img = new Image;
 		img.src = e.target.src;
 		currentCommentContainer.find('.comment-create-input-group .humhub-ui-richtext').append(img);
-	}	
+	}
 }
 
   var input = document.getElementById('searching');
@@ -80,7 +79,7 @@ function grab_data() {
   <div class="modal-content">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-      <h4 class="modal-title" id="myModalLabel"><?= Yii::t('GifsModule.base', 'Select a GIF'); ?></h4>
+      <h4 class="modal-title" id="myModalLabel"><?= \Yii::t('GifsModule.base', 'Select a GIF'); ?></h4>
     </div>
     <div class="modal-body">
       <?php
@@ -88,29 +87,27 @@ function grab_data() {
  ?>
       <p>Please set your API client slot in administration</p>
       <?php
-	}else{
+	} else {
 ?>
       <div class="tab-pane">
-        <?php $form = ActiveForm::begin(); ?>		
-		 <?= $form->field($model, 'space')->textInput(['id' => 'searching', 'placeholder' => Yii::t('GifsModule.base', 'Search Tenor')])->label(false); ?>
+        <?php $form = ActiveForm::begin(); ?>
+		 <?= $form->field($model, 'space')->textInput(['id' => 'searching', 'placeholder' => \Yii::t('GifsModule.base', 'Search Tenor')])->label(false); ?>
 		<div class="panel panel-default clearfix">
 			<div id="gif-output">
 			</div>
 		</div>
-       
+
         <div class="modal-footer">
           <button type="button" class="btn btn-primary" data-dismiss="modal">
-            <?= Yii::t('GifsModule.base', 'Close'); ?>
+            <?= \Yii::t('GifsModule.base', 'Close'); ?>
           </button>
           <?php ActiveForm::end(); ?>
         </div>
       </div>
       <?php } ?>
-      <?= \humhub\widgets\LoaderWidget::widget(['id' => 'invite-loader', 'cssClass' => 'loader-modal hidden']); ?>
+      <?= LoaderWidget::widget(['id' => 'invite-loader', 'cssClass' => 'loader-modal hidden']); ?>
     </div>
 
   </div>
 
 </div>
-
-
