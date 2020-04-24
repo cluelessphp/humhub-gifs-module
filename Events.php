@@ -11,18 +11,6 @@ use humhub\models\Setting;
 class Events extends BaseObject
 {
 
-    public static function onAdminMenuInit($event)
-    {
-        $event->sender->addItem([
-            'label' => Yii::t('GifsModule.base', 'GIF Settings'),
-            'url' => Url::toRoute('/gifs/admin/index'),
-            'group' => 'settings',
-            'icon' => '<i class="fa fa-cog"></i>',
-            'isActive' => Yii::$app->controller->module && Yii::$app->controller->module->id == 'gifs' && Yii::$app->controller->id == 'admin',
-            'sortOrder' => 650
-        ]);
-    }
-
     public static function gifFrame($event)
     {
         if (Yii::$app->user->isGuest) {
@@ -32,9 +20,8 @@ class Events extends BaseObject
             'sortOrder' => Setting::Get('timeout', 'gifs')
             ]);
     }
-	
-	
-	public static function onWallEntryLinksInit($event)
+
+    public static function onWallEntryLinksInit($event)
     {
         $stackWidget = $event->sender;
         $content = $event->sender->object;
