@@ -39,7 +39,7 @@ class Events extends BaseObject
         $stackWidget = $event->sender;
         $content = $event->sender->object;
 
-        $stackWidget->addWidget(widgets\GifDisplay::className(), ['content' => $content]);
+        $stackWidget->addWidget(widgets\GifDisplay::class, ['content' => $content]);
     }
 
 
