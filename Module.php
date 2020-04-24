@@ -6,5 +6,5 @@ use humhub\modules\content\components\ContentContainerModule;
 
 class Module extends ContentContainerModule
 {
-    public $resourcesPath = 'resources';
+
 }
