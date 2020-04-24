@@ -28,7 +28,6 @@ class Events extends BaseObject
         if (Yii::$app->user->isGuest) {
             return;
         }
-        $event->sender->view->registerAssetBundle(Assets::class);
         $event->sender->addWidget(gifdisplay::class, [], [
             'sortOrder' => Setting::Get('timeout', 'gifs')
             ]);
@@ -40,7 +39,7 @@ class Events extends BaseObject
         $stackWidget = $event->sender;
         $content = $event->sender->object;
 
-        $stackWidget->addWidget(widgets\GifDisplay::className(), ['content' => $content]);
+        $stackWidget->addWidget(widgets\GifDisplay::class, ['content' => $content]);
     }
 
 

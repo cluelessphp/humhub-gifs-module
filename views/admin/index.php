@@ -1,24 +1,21 @@
 <?php
 
-use humhub\compat\CHtml;
+use yii\helpers\Html;
 use humhub\models\Setting;
-use humhub\compat\CActiveForm;
-use humhub\modules\gifs\controllers\AdminController;
+use yii\bootstrap\ActiveForm;
+
 ?>
+
 <div class="panel panel-default">
-	<div class="panel-heading"><?=Yii::t('GifsModule.base', '<strong>Tenor</strong>'); ?></div>
+	<div class="panel-heading"><?= \Yii::t('GifsModule.base', '<strong>Tenor</strong>'); ?></div>
 	<div class="panel-body">
-		<?php $form = CActiveForm::begin(['id' => 'gifs-settings-form']); ?>
-			<?=$form->errorSummary($model); ?>
-			<p class="help-block"><?=Yii::t('GifsModule.base', 'eg: "LKLSAW23FKQP"'); ?></p>
-			
+		<?php $form = ActiveForm::begin(['id' => 'gifs-settings-form']); ?>
+
 			<div class="form-group">
-				<?=$form->labelEx($model, 'client'); ?>
-				<?=$form->textField($model, 'client', ['class' => 'form-control', 'readonly' => Setting::IsFixed('client', 'gifs')]); ?>
+				<?= $form->field($model, 'client'); ?>
 			</div>
-			
-			<?= CHtml::submitButton(Yii::t('GifsModule.base', 'save'), ['class' => 'btn btn-primary']); ?>
-			<?=\humhub\widgets\DataSaved::widget(); ?>
-		<?php CActiveForm::end(); ?>
+			<p class="help-block"><?= \Yii::t('GifsModule.base', 'eg: "LKLSAW23FKQP"'); ?></p>
+			<?= Html::submitButton(\Yii::t('GifsModule.base', 'save'), ['class' => 'btn btn-primary']); ?>
+		<?php ActiveForm::end(); ?>
 	</div>
 </div>

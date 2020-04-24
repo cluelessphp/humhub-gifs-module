@@ -16,9 +16,7 @@ class ShareForm extends Model
 
     public function rules()
     {
-        return array(
-            array('space', 'safe')
-        );
+        return [['space', 'safe']];
     }
 
 }
