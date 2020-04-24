@@ -1,0 +1,10 @@
+{
+    "id": "gifs",
+    "name": "Send gif reply",
+    "description": "Send gif reply to wall",
+    "keywords": [],
+    "version": "1.0.0",
+    "humhub": {
+        "minVersion": "1.1"
+    }
+}
