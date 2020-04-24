@@ -3,9 +3,9 @@
 namespace humhub\modules\gifs;
 
 use yii\helpers\Url;
-use humhub\modules\content\components\ContentContainerModule;
+use humhub\components\Module as BaseModule;
 
-class Module extends ContentContainerModule
+class Module extends BaseModule
 {
 
     /**
