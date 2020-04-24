@@ -34,7 +34,7 @@ class ConfigureForm extends Model
 
     public function loadSettings()
     {
-        $this->serverUrl = Yii::$app->getModule('gifs')->settings->get('client');
+        $this->client = Yii::$app->getModule('gifs')->settings->get('client');
 
         return true;
     }
