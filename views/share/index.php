@@ -6,9 +6,16 @@ use yii\bootstrap\ActiveForm;
 use humhub\widgets\LoaderWidget;
 ?>
 <style>
+
+#gif-output{
+	overflow-y: scroll;
+	height: 250px;
+}
+
 #gif-output img{
-	width: 115px;
-	height: 150px;
+	width: 130px;
+    padding: 5px;
+    height: 150px;
 }
 </style>
 <script>
@@ -49,7 +56,7 @@ function tenorCallback_search(responsetext) {
 function grab_data() {
   // set the apikey and limit
   let apikey = "<?php print Setting::Get('client', 'gifs');?>";
-  let lmt = 12;
+  let lmt = 50;
 
   // test search ter
   let searching = document.querySelector('#searching')
