@@ -15,6 +15,13 @@ use yii\bootstrap\ActiveForm;
 				<?= $form->field($model, 'client'); ?>
 			</div>
 			<p class="help-block"><?= \Yii::t('GifsModule.base', 'eg: "LKLSAW23FKQP"'); ?></p>
+			
+			<div class="form-group">
+				<?= $form->field($model, 'gifSetting'); ?>			
+				
+			</div>
+			<p class="help-block"><?= \Yii::t('GifsModule.base', ' For valid sizes reffer to https://tenor.com/gifapi/documentation#responseobjects-gifformat'); ?></p>
+			
 			<?= Html::submitButton(\Yii::t('GifsModule.base', 'save'), ['class' => 'btn btn-primary']); ?>
 		<?php ActiveForm::end(); ?>
 	</div>

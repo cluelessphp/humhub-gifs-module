@@ -12,13 +12,16 @@ class ConfigureForm extends Model
 {
 
     public $client;
+    public $gifSetting;
 
     public function rules()
     {
         return [
-            [['client'], 'safe'],
+            [['client', 'gifSetting'], 'safe'],
             [['client'], 'required'],
-            [['client'], 'string', 'max' => 255]
+            [['client'], 'string', 'max' => 255],
+			[['gifSetting'], 'required'],
+			[['gifSetting'], 'string', 'max' => 255]
         ];
     }
 
@@ -28,13 +31,15 @@ class ConfigureForm extends Model
      public function attributeLabels()
      {
          return [
-             'client' => Yii::t('GifsModule.base', 'client')
+             'client' => Yii::t('GifsModule.base', 'client'),
+             'gifSetting' => Yii::t('GifsModule.base', 'gifSetting')
          ];
      }
 
     public function loadSettings()
     {
         $this->client = Yii::$app->getModule('gifs')->settings->get('client');
+        $this->gifSetting = Yii::$app->getModule('gifs')->settings->get('gifSetting');
 
         return true;
     }
@@ -42,7 +47,9 @@ class ConfigureForm extends Model
     public function save()
     {
         Yii::$app->getModule('gifs')->settings->set('client', $this->client);
+		Yii::$app->getModule('gifs')->settings->set('gifSetting', $this->gifSetting);
         return true;
     }
 
+	
 }

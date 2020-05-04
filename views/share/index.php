@@ -43,10 +43,11 @@ function httpGetAsync(theUrl, callback) {
 // callback for the top 8 GIFs of search
 function tenorCallback_search(responsetext) {
   // parse the json response
+  let gifSize = "<?php print Setting::Get('gifSetting', 'gifs');?>";
   const gifs = JSON.parse(responsetext).results.map(r => {
-    const nanogif = r.media[0].nanogif
-    return ` <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="opacity: 1 !important;"><img src="${nanogif.url}" width="${nanogif.dims[0]}" x-height="${nanogif.dims[0]}"></button>`;
-    console.log(nanogif);
+    const nanogif = r.media[0][gifSize]
+    return ` <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="opacity: 1 !important;"><img src="${nanogif.url}" width="${nanogif.dims[0]}"></button>`;
+    console.log(gifSize);
   }).join("");
   document.getElementById("gif-output").innerHTML = gifs;
 }
@@ -56,7 +57,7 @@ function tenorCallback_search(responsetext) {
 function grab_data() {
   // set the apikey and limit
   let apikey = "<?php print Setting::Get('client', 'gifs');?>";
-  let lmt = 50;
+  let lmt = 12;
 
   // test search ter
   let searching = document.querySelector('#searching')
@@ -90,9 +91,9 @@ function grab_data() {
     </div>
     <div class="modal-body">
       <?php
-  	if (!Setting::Get('client', 'gifs')) {
+  	if (!Setting::Get('client', 'gifs') || !Setting::Get('gifSetting', 'gifs')) {
  ?>
-      <p>Please set your API client slot in administration</p>
+      <p>Please ensure both API client and GIFs settings are completed within administration section</p>
       <?php
 	} else {
 ?>
