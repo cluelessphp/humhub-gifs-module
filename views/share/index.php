@@ -57,7 +57,8 @@ function tenorCallback_search(responsetext) {
 function grab_data() {
   // set the apikey and limit
   let apikey = "<?php print Setting::Get('client', 'gifs');?>";
-  let lmt = 12;
+  //Maximum lmt of 50
+  let lmt = 50;
 
   // test search ter
   let searching = document.querySelector('#searching')
