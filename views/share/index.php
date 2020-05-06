@@ -17,39 +17,41 @@ use humhub\widgets\LoaderWidget;
     padding: 5px;
     height: 150px;
 }
+
+#searching{
+	width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+	margin-bottom: 10px;
+}
 </style>
 <script>
 
-function httpGetAsync(theUrl, callback) {
-  // create the request object
-  let xmlHttp = new XMLHttpRequest();
-
-  // set the state change callback to capture when the response comes in
-  xmlHttp.onreadystatechange = function() {
-    if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
-      callback(xmlHttp.responseText);
-    }
-  }
-
-  // open as a GET call, pass in the url and set async = True
-  xmlHttp.open("GET", theUrl, true);
-
-  // call send with no params as they were passed in on the url string
-  xmlHttp.send(null);
-
-  return;
-}
-
 // callback for the top 8 GIFs of search
-function tenorCallback_search(responsetext) {
+function tenorCallback_search(data) {
   // parse the json response
   let gifSize = "<?php print Setting::Get('gifSetting', 'gifs');?>";
-  const gifs = JSON.parse(responsetext).results.map(r => {
+  const gifs = data.results.map(r => {
     const nanogif = r.media[0][gifSize]
     return ` <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="opacity: 1 !important;"><img src="${nanogif.url}" width="${nanogif.dims[0]}"></button>`;
-    console.log(gifSize);
+
   }).join("");
-  document.getElementById("gif-output").innerHTML = gifs;
+  $("#gif-output").html(gifs);
 }
 
 
@@ -58,27 +60,26 @@ function grab_data() {
   // set the apikey and limit
   let apikey = "<?php print Setting::Get('client', 'gifs');?>";
   //Maximum lmt of 50
-  let lmt = 50;
+  let lmt = 40;
 
   // test search ter
-  let searching = document.querySelector('#searching')
+  let searching = $(this).val();
+  console.log(searching);
 
-  searching.oninput = function(evt) {
-    let gifSearch = searching.value,
+  let gifSearch = searching,
     search_url = "https://api.tenor.com/v1/search?q=" + gifSearch + "&key=" + apikey + "&limit=" + lmt;
-    httpGetAsync(search_url, tenorCallback_search);
+  console.log("gifSearch", gifSearch, search_url)
+  $.getJSON(search_url, tenorCallback_search);
 
-  };
-
-	document.getElementById('gif-output').onclick = function(e){
-		let img = new Image;
-		img.src = e.target.src;
-		currentCommentContainer.find('.comment-create-input-group .humhub-ui-richtext').append(img);
-	}
 }
+  $('#gif-output').click(function(e) {
+    let img = new Image;
+    img.src = e.target.src;
+    currentCommentContainer.find('.comment-create-input-group .humhub-ui-richtext').append(img);
+  });
 
-  var input = document.getElementById('searching');
-  input.addEventListener('input', grab_data);
+
+$("#searching").on('keyup', grab_data);
 
 
 </script>
@@ -99,8 +100,7 @@ function grab_data() {
 	} else {
 ?>
       <div class="tab-pane">
-        <?php $form = ActiveForm::begin(); ?>
-		 <?= $form->field($model, 'space')->textInput(['id' => 'searching', 'placeholder' => \Yii::t('GifsModule.base', 'Search Tenor')])->label(false); ?>
+		 <input type ="text" id="searching" placeholder="Search Tenor">
 		<div class="panel panel-default clearfix">
 			<div id="gif-output">
 			</div>
@@ -110,7 +110,7 @@ function grab_data() {
           <button type="button" class="btn btn-primary" data-dismiss="modal">
             <?= \Yii::t('GifsModule.base', 'Close'); ?>
           </button>
-          <?php ActiveForm::end(); ?>
+        
         </div>
       </div>
       <?php } ?>
