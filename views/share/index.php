@@ -46,11 +46,10 @@ use humhub\widgets\LoaderWidget;
 function tenorCallback_search(data) {
   // parse the json response
   let gifSize = "<?php print Setting::Get('gifSetting', 'gifs');?>";
-  const gifs = data.results.map(r => {
-    const nanogif = r.media[0][gifSize]
-    return ` <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="opacity: 1 !important;"><img src="${nanogif.url}" width="${nanogif.dims[0]}"></button>`;
-
-  }).join("");
+  const gifs = data.results.map(r=>{
+    let nanogif=r.media_formats.nanogif;
+    return `<button type='button' class='close' data-dismiss='modal' aria-hidden='false' style='opacity: 1'><img src='${nanogif.url}' width='${nanogif.dims[0]}'></button>`
+}).join("");
   $("#gif-output").html(gifs);
 }
 
@@ -67,7 +66,7 @@ function grab_data() {
   console.log(searching);
 
   let gifSearch = searching,
-    search_url = "https://api.tenor.com/v1/search?q=" + gifSearch + "&key=" + apikey + "&limit=" + lmt;
+    search_url = "https://tenor.googleapis.com/v2/search?q=" + gifSearch + "&key=" + apikey + "&limit=" + lmt;
   console.log("gifSearch", gifSearch, search_url)
   $.getJSON(search_url, tenorCallback_search);
 
@@ -75,7 +74,7 @@ function grab_data() {
   $('#gif-output').click(function(e) {
     let img = new Image;
     img.src = e.target.src;
-    currentCommentContainer.find('.comment-create-input-group .humhub-ui-richtext').append(img);
+    currentCommentContainer.find('.field-comment-message .humhub-ui-richtext').append(img);
   });
 
 
