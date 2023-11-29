@@ -18,7 +18,6 @@ $(document).on("click",'.showComments',function(e) {
 	console.log('got here');
     e.preventDefault();
     /* currentCommentContainer is a global */
-    //currentCommentContainer = $(this).closest('.media').find('.comment-container').slideDown();	
     currentCommentContainer = $(this).closest('.wall-entry-body').find('.comment-container').slideDown();
 });
 </script>
