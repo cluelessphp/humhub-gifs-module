@@ -40,7 +40,7 @@ use humhub\widgets\LoaderWidget;
 	margin-bottom: 10px;
 }
 </style>
-<script>
+<script <?= \humhub\libs\Html::nonce() ?>>
 
 // callback for the top 8 GIFs of search
 function tenorCallback_search(data) {
